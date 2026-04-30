@@ -86,4 +86,16 @@ SELECT *
 FROM DimCiudad
 ORDER BY Factor_Envio DESC;
 -- ═══════════════════════════════════════════════════════════════
+PRAGMA foreign_keys = ON;
+
+CREATE TABLE FactVentas_Demo (
+    TransaccionID INTEGER PRIMARY KEY,
+    CiudadID      INTEGER NOT NULL,
+    Cantidad      INTEGER NOT NULL,
+    FOREIGN KEY (CiudadID) REFERENCES DimCiudad(CiudadID)
+);
+
+-- ESTO DEBE DAR ERROR (Validación de Foreign Key):
+INSERT INTO FactVentas_Demo VALUES (101, 99, 5); 
+
 -- Fin del Laboratorio 06
