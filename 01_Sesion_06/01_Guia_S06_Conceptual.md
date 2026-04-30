@@ -18,7 +18,7 @@
 
 > [!TIP]
 > **¿Prefieres trabajar localmente en VS Code?**
-> Sigue la guía específica en: [02_Guia_S06_Antigravity.md](file:///Users/macbookpro/Developer/Learning/SQL/01_Sesion_06/02_Guia_S06_Antigravity.md) para una experiencia fluida con SQLite.
+> Sigue la guía específica en: [02_Guia_S06_Antigravity.md](02_Guia_S06_Antigravity.md) para una experiencia fluida con SQLite.
 
 > **Tu misión hoy:** ¿Qué habría pasado si los datos de NovaMarket hubieran vivido en una base de datos relacional desde el principio?
 >
@@ -332,7 +332,7 @@ En S6 firmaste el contrato con dos tablas pequeñas. En S7 trabajarás con la **
 
 Si estás usando **DB Fiddle**, continúa con los bloques A-D en la web.
 Si estás usando **VS Code + Antigravity**, abre ahora el archivo:
-👉 **[02_Guia_S06_Antigravity.md](file:///Users/macbookpro/Developer/Learning/SQL/01_Sesion_06/02_Guia_S06_Antigravity.md)**
+👉 **[02_Guia_S06_Antigravity.md](02_Guia_S06_Antigravity.md)**
 
 ---
 *Sesión 6 | El Contrato con los Datos | NovaMarket Tech*

@@ -133,7 +133,7 @@ INSERT INTO FactVentas_Demo VALUES (101, 99, 5);
 
 Si lograste que SQLite rechazara el último `INSERT`, ¡felicidades! Has hecho que el motor SQL trabaje para ti previniendo errores de datos.
 
-👉 **Siguiente Sesión:** [05_Puente_S07.md](file:///Users/macbookpro/Developer/Learning/SQL/01_Sesion_06/05_Puente_S07.md)
+👉 **Siguiente Sesión:** [05_Puente_S07.md](05_Puente_S07.md)
 
 ---
 *Sesión 06 | Antigravity Lab | NovaMarket Tech*

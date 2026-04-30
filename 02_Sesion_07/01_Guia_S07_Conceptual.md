@@ -394,7 +394,7 @@ En S7 filtraste filas individuales con `WHERE`. En S8 aprenderás a comprimir es
 ## Siguiente Paso: ¡A interrogar los datos!
 
 Si estás usando la web, continúa con los bloques A-E. Si estás en local con **VS Code**, abre ahora tu guía práctica: 
-👉 **[02_Guia_S07_Antigravity.md](file:///Users/macbookpro/Developer/Learning/SQL/02_Sesion_07/02_Guia_S07_Antigravity.md)**
+👉 **[02_Guia_S07_Antigravity.md](02_Guia_S07_Antigravity.md)**
 
 ---
 *Sesión 7 | El Interrogatorio | NovaMarket Tech*

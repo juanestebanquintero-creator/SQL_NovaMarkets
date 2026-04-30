@@ -1,7 +1,7 @@
 -- 💻 LABORATORIO SESIÓN 7: EL INTERROGATORIO (SQL en VS Code)
 -- ═══════════════════════════════════════════════════════════════
 -- Guía de Referencia: 02_Guia_S07_Antigravity.md
--- Base de Datos: Novamarket_S07_Juan.db (500 registros)
+-- Base de Datos: Novamarket_S07_Juan_y_Yesid.db (500 registros)
 -- ═══════════════════════════════════════════════════════════════
 
 -- ══ BLOQUE A — Exploración Inicial ═════════════════════════════
