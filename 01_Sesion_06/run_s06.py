@@ -1,7 +1,7 @@
 import sqlite3
 import os
 
-db_path = "01_Base_Datos_S06.db"
+db_path = "01_Base_Datos_S06_Juan.db"
 sql_path = "03_Laboratorio_S06.sql"
 
 if os.path.exists(db_path):
