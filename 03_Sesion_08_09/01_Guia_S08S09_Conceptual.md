@@ -78,7 +78,7 @@ SELECT CiudadID, COUNT(*) AS Filas FROM FactVentas GROUP BY CiudadID;
 
 | Pregunta | Tu respuesta |
 |---|---|
-| ¿Cuántas filas retorna GROUP BY? ¿Por qué? | |
+| ¿Cuántas filas retorna GROUP BY? ¿Por qué? | Retorna 6 filas. Porque la cláusula GROUP BY comprime (agrupa) las 500 filas de transacciones en una fila por cada valor único de CiudadID (y hay 6 ciudades). |
 
 ### Paso 2 — El veredicto de Leticia con GROUP BY
 
@@ -99,9 +99,9 @@ ORDER BY Margen_Aproximado ASC;
 
 | Pregunta | Tu respuesta |
 |---|---|
-| ¿Qué CiudadID tiene Margen_Aproximado negativo? | |
-| ¿Cuánto es esa pérdida? | |
-| ¿Coincide con el número de Power BI de S4? | SÍ / NO |
+| ¿Qué CiudadID tiene Margen_Aproximado negativo? | Ninguna tiene margen negativo en esta base de datos. Sin embargo, Leticia (CiudadID = 2) tiene el margen más bajo (134,920). |
+| ¿Cuánto es esa pérdida? | No hay pérdida, pero la utilidad es considerablemente menor debido a su alto Costo_Envio_Total (115,000). |
+| ¿Coincide con el número de Power BI de S4? | NO (probablemente en S4 había otros costos, o los datos eran distintos). |
 
 ### Paso 3 — SUM vs AVG: el mismo debate de S2
 
@@ -117,7 +117,7 @@ GROUP BY CiudadID;
 
 | Pregunta | Tu respuesta |
 |---|---|
-| ¿Para decidir si cerrar Leticia, cuál usarías: SUM o AVG? | |
+| ¿Para decidir si cerrar Leticia, cuál usarías: SUM o AVG? | Usaría SUM (Costo_TOTAL), ya que me permite ver el impacto real y total de los costos de envío sobre la rentabilidad global de la ciudad, en lugar del costo promedio por transacción. |
 
 ---
 
@@ -138,8 +138,8 @@ LIMIT 5;
 
 | Pregunta | Tu respuesta |
 |---|---|
-| ¿Qué columna une las dos tablas? | |
-| ¿Por qué ahora aparece 'Leticia' y no '6'? | |
+| ¿Qué columna une las dos tablas? | La columna `CiudadID` (`f.CiudadID = c.CiudadID`). |
+| ¿Por qué ahora aparece 'Leticia' y no '6'? | Porque usamos `INNER JOIN` para cruzar la tabla `FactVentas` con `DimCiudad`, permitiéndonos seleccionar la columna `c.Ciudad` (el nombre real) en lugar de solo su ID. Nota: en esta BD Leticia tiene el ID 2, no el 6. |
 
 ### Paso 5 — Doble JOIN: ciudad Y producto
 
@@ -180,9 +180,9 @@ ORDER BY Margen_Aproximado ASC;
 
 | Pregunta | Tu respuesta |
 |---|---|
-| ¿Aparece 'Leticia' con Margen_Aproximado negativo? | SÍ / NO |
-| ¿Cuánto es esa pérdida? | |
-| ¿Coincide este resultado con el dashboard de Power BI de S4? | |
+| ¿Aparece 'Leticia' con Margen_Aproximado negativo? | NO (su margen es positivo, 134,920). |
+| ¿Cuánto es esa pérdida? | No aplica, no hay pérdida. |
+| ¿Coincide este resultado con el dashboard de Power BI de S4? | NO. |
 
 ---
 
@@ -193,6 +193,14 @@ Muestra nombre del producto, categoría y venta neta total de cada producto. Ord
 
 ```sql
 -- Tu consulta:
+SELECT 
+    p.Producto,
+    p.Categoria,
+    ROUND(SUM(f.Precio_Venta * f.Cantidad * (1 - f.Descuento_Pct)), 2) AS Venta_Neta_Total
+FROM FactVentas f
+INNER JOIN DimProducto p ON f.ProductoID = p.ProductoID
+GROUP BY p.Producto, p.Categoria
+ORDER BY Venta_Neta_Total DESC;
 ```
 
 ### Ejercicio 2
@@ -200,6 +208,16 @@ Muestra nombre del producto, categoría y venta neta total de cada producto. Ord
 
 ```sql
 -- Tu consulta:
+SELECT 
+    p.Producto,
+    ROUND(SUM(f.Precio_Venta * f.Cantidad * (1 - f.Descuento_Pct)), 2) AS Venta_Neta_Total
+FROM FactVentas f
+INNER JOIN DimCiudad c ON f.CiudadID = c.CiudadID
+INNER JOIN DimProducto p ON f.ProductoID = p.ProductoID
+WHERE c.Ciudad = 'Leticia'
+GROUP BY p.Producto
+ORDER BY Venta_Neta_Total DESC
+LIMIT 1;
 ```
 
 ### Ejercicio 3
@@ -207,6 +225,16 @@ Reproduce la tabla del dashboard de S4 completa: Ciudad, Ventas, Utilidad, Marge
 
 ```sql
 -- Ya la escribiste arriba — ¿coincide con S4?
+SELECT 
+    c.Ciudad AS Ciudad,
+    ROUND(SUM(f.Precio_Venta * f.Cantidad * (1 - f.Descuento_Pct)), 2) AS Ventas,
+    ROUND(SUM(f.Precio_Venta * f.Cantidad * (1 - f.Descuento_Pct) - f.Costo_Envio), 2) AS Utilidad,
+    ROUND((SUM(f.Precio_Venta * f.Cantidad * (1 - f.Descuento_Pct) - f.Costo_Envio) / SUM(f.Precio_Venta * f.Cantidad * (1 - f.Descuento_Pct))) * 100, 2) AS Margen_Porcentaje
+FROM FactVentas f
+INNER JOIN DimCiudad c ON f.CiudadID = c.CiudadID
+GROUP BY c.Ciudad
+ORDER BY Utilidad DESC;
+-- En esta base de datos, el resultado no coincide exactamente con S4 (Leticia no tiene pérdida aquí, aunque sigue siendo la menos rentable).
 ```
 
 ---
